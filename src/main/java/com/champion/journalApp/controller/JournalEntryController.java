@@ -1,9 +1,6 @@
 package com.champion.journalApp.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,7 +45,7 @@ public class JournalEntryController {
 	}
 	
 	@PutMapping("/id/{id}")
-	public JournalEntry updateEntryById(@PathVariable Long id, @RequestBody JournalEntry entry) {
-		return null;
+	public JournalEntry updateEntryById(@PathVariable Long id, @RequestBody JournalEntry newEntry) {
+		return journalEntryService.updateById(id, newEntry);
 	}
 }

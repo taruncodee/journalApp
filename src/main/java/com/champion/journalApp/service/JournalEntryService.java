@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.champion.journalApp.entity.JournalEntry;
 import com.champion.journalApp.repository.JournalEntryRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class JournalEntryService {
 
@@ -31,5 +33,17 @@ public class JournalEntryService {
 	
 	public void deleteById(Long id) {
 		journalEntryRepository.deleteById(id);
+	}
+	@Transactional
+	public JournalEntry updateById(Long id, JournalEntry newEntry) {
+		JournalEntry oldEntry = getById(id);
+		if(oldEntry != null) {
+			oldEntry.setTitle(newEntry.getTitle() != null && !newEntry.getTitle().equals("") ? newEntry.getTitle() : oldEntry.getTitle());
+			oldEntry.setContent(newEntry.getContent() != null && !newEntry.getContent().equals("") ? newEntry.getContent() : oldEntry.getContent());
+//			saveEntry(oldEntry);
+			return oldEntry;
+		}
+		else
+			return null;
 	}
 }
