@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.champion.journalApp.entity.JournalEntry;
+import com.champion.journalApp.entity.User;
 import com.champion.journalApp.repository.JournalEntryRepository;
 
 import jakarta.transaction.Transactional;
@@ -16,10 +17,16 @@ public class JournalEntryService {
 
 	@Autowired
 	private JournalEntryRepository journalEntryRepository;
+	@Autowired
+	private UserService userService;
 	
-	public JournalEntry saveEntry(JournalEntry entry) {
+	@Transactional
+	public JournalEntry saveEntry(JournalEntry entry, String username) {
+		User user = userService.getByUsername(username);
 		entry.setDate(LocalDateTime.now());
+		entry.setUser(user);
 		journalEntryRepository.save(entry);
+		user.getJournalEntries().add(entry);
 		return entry;
 	}
 	

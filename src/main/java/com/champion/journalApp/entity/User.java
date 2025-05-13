@@ -14,8 +14,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.UniqueConstraint;
+import lombok.Data;
 
 @Entity
+@Data
 public class User {
 
 	@Id
